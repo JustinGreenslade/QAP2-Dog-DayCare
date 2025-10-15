@@ -26,15 +26,15 @@ public class DogController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Dog> searchDogs(@RequestParam(value = "name", required = false) String name,
-                                @RequestParam(value = "owner", required = false) String owner){
-
+    public ResponseEntity<List<Dog>> searchDogs(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "owner", required = false) String owner){
     if (name != null){
-        Dog dogFound = dogService.findByName(name);
-        return dogFound != null ? ResponseEntity.ok(dogFound) : ResponseEntity.notFound().build();
+        List<Dog> dogsFound = dogService.findByName(name);
+        return dogsFound.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(dogsFound);
     } else if (owner != null){
-        Dog dogFound = dogService.findByOwner(owner);
-        return dogFound != null ? ResponseEntity.ok(dogFound) :  ResponseEntity.notFound().build();
+        List<Dog> dogsFound = dogService.findByOwner(owner);
+        return dogsFound.isEmpty() ? ResponseEntity.notFound().build() :  ResponseEntity.ok(dogsFound);
     }
     return ResponseEntity.badRequest().build();
     }
@@ -44,8 +44,14 @@ public class DogController {
         return ResponseEntity.status(HttpStatus.CREATED).body(dogService.createDog(dog));}
 
     @PutMapping("/{id}")
-    public ResponseEntity<Dog> updateDog(@PathVariable Long id, @RequestBody Dog dog){
-        Dog updatedDog = dogService.updateDog(id, dog);
+    public ResponseEntity<Dog> updateDog(
+             @PathVariable Long id,
+             @RequestParam(value = "name", required = false) String name,
+             @RequestParam(value = "breed", required = false) String breed,
+             @RequestParam(value = "age", required = false) Integer age,
+             @RequestParam(value = "isVaccinated", required = false) Boolean isVaccinated,
+             @RequestParam(value = "owner", required = false) String owner){
+        Dog updatedDog = dogService.updateDog(id, name, breed, age, isVaccinated, owner);
         return updatedDog != null ? ResponseEntity.ok(updatedDog) : ResponseEntity.notFound().build();
     }
 
