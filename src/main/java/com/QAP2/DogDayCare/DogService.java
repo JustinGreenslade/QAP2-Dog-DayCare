@@ -17,23 +17,33 @@ public class DogService {
         Optional<Dog> dogOptional = dogRepository.findById(id);
         return dogOptional.orElse(null);}
 
-    public Dog findByName(String name){ return dogRepository.findByName(name);}
+    public List<Dog> findByName(String name){ return dogRepository.findByName(name);}
 
-    public Dog findByOwner(String owner){return dogRepository.findByOwner(owner);}
+    public List<Dog> findByOwner(String owner){return dogRepository.findByOwner(owner);}
 
     public Dog createDog(Dog newDog) {return dogRepository.save(newDog);}
 
-    public Dog updateDog(Long id, Dog updatedDog){
+    public Dog updateDog(Long id, String name, String breed, Integer age, Boolean isVaccinated, String owner){
         Optional<Dog> dogToUpdateOptional = dogRepository.findById(id);
 
         if (dogToUpdateOptional.isPresent()){
             Dog dogToUpdate = dogToUpdateOptional.get();
 
-            dogToUpdate.setName(updatedDog.getName());
-            dogToUpdate.setBreed(updatedDog.getBreed());
-            dogToUpdate.setAge(updatedDog.getAge());
-            dogToUpdate.setVaccinated(updatedDog.isVaccinated());
-            dogToUpdate.setOwner(updatedDog.getOwner());
+            if (name != null){
+                dogToUpdate.setName(name);
+            }
+            if (breed != null){
+                dogToUpdate.setBreed(breed);
+            }
+            if (age != null){
+                dogToUpdate.setAge(age);
+            }
+            if (isVaccinated != null){
+                dogToUpdate.setVaccinated(isVaccinated);
+            }
+            if (owner != null){
+                dogToUpdate.setOwner(owner);
+            }
 
             return dogRepository.save(dogToUpdate);
         }

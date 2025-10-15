@@ -48,7 +48,7 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId> <!-- Entity/Repo -->
         </dependency>
 
-        <!-- not used for this project Used for in memory database -->
+        <!-- Not used for this project Used for in memory database -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -75,7 +75,7 @@
 <!--            <version>1.18.42</version>-->
 <!--        </dependency>-->
 
-        <!--  not required for this project but used for Mocking/Tests  -->
+        <!--  Not required for this project but used for Mocking/Tests  -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
